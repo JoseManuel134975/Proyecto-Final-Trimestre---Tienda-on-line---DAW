@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fortnite-Shop</title>
-    <link rel="stylesheet" href="../src/css/shop.css">
+    <link rel="stylesheet" href="../css/shop.css">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <meta name="author" content="Jose Manuel Martinez Fernandez">
     <meta name="description" content="Tienda actual de Fortnite">
@@ -12,16 +12,35 @@
 </head>
 
 <body>
+    <!-- HEADER -->
     <header>
+        <a href="#">Inicio</a>
+        <a href="../views/cart.html">Mi carrito</a>
 
+        <div id="logout"><a href="../index.html">Salir</a></div>
     </header>
+    <!-- HEADER -->
 
+    <!-- MAIN -->
     <main class="container">
+        <section class="products">
 
+        </section>
+
+        <section class="pagination">
+            <button id="next">Siguiente</button>
+            <p id="pageOfPages"></p>
+            <button id="previous">Anterior</button>
+        </section>
     </main>
+    <!-- MAIN -->
 
+    <!-- FOOTER -->
     <footer>
-        
+        <p>&copy; José Manuel Martínez Fernández 2024-25</p>
     </footer>
+    <!-- FOOTER -->
+
+    <script type="module" src="../js/index.js"></script>
 </body>
 </html>

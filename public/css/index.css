@@ -1,9 +1,11 @@
+/* GENERAL */
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
+/* VARIABLES */
 :root{
     --main-gradient-color: linear-gradient(145deg, #f0f4f8, #d9e2ec);
     --login-button-color: #c9d9ec;
@@ -14,6 +16,7 @@ body{
     background: var(--main-gradient-color);
 }
 
+/* MAIN */
 .container{
     width: 100vw;
     height: 100vh;
@@ -21,6 +24,7 @@ body{
     align-items: center;
 }
 
+/* FORMULARIO */
 .form-container{
     width: auto;
     padding: 30px;

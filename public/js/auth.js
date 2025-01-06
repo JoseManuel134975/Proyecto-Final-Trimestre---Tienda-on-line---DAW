@@ -1,6 +1,14 @@
 import { getAPI, postAPI } from "../utils/api.js";
 
 
+/**
+ * Comprueba si el usuario que ha iniciado sesión existe en el JSON
+ * Devuelve el propio objeto del usuario
+ * @param {String} user 
+ * @param {String} email 
+ * @param {Promise} promise 
+ * @returns {Object}
+ */
 const validateUser = (user, email, promise) => {
     let exist
 
@@ -18,6 +26,13 @@ const validateUser = (user, email, promise) => {
     return exist
 }
 
+/**
+ * Añade el usuario registrado al JSON de usuarios (como un INSERT en BD)
+ * @param {String} user 
+ * @param {String} email 
+ * @param {Array} arr 
+ * @return {void}
+ */
 const registerUser = (user, email, arr) => {
     const length = arr.length
     let userObj = {
@@ -36,6 +51,10 @@ const registerUser = (user, email, arr) => {
     }
 }
 
+/**
+ * Devuelve el token guardado al iniciar sesión (nombre de usuario)
+ * @returns {Object}
+ */
 export const getToken = () => localStorage.getItem('token')
 
 const eventListeners = (login, register) => {
