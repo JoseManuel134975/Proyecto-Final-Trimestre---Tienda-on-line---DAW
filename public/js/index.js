@@ -137,7 +137,7 @@ function manageBtns() {
  * Limpia el HTML cada vez que se cambia de página
  * @return void
  */
-const clearHTML = () => {
+export const clearHTML = () => {
     document.querySelector('.products').innerHTML = ''
 }
 
@@ -158,6 +158,8 @@ const renderData = (promise) => {
 
     promise.then((json) => {
         json.forEach((item) => {
+            Object.assign(item, { id: contId })
+
             const product = document.createElement('article')
             product.className = 'products__product'
             product.style.backgroundColor = 'transparent'
@@ -202,7 +204,7 @@ const renderData = (promise) => {
                     });
                     break;
 
-                case "instruments" in item:
+                default:
                     item.instruments.forEach((instrument) => {
                         if ("images" in instrument) {
                             img.src = instrument.images.large;
@@ -249,12 +251,21 @@ const renderData = (promise) => {
             })
 
             button.addEventListener("click", () => {
-                cart.push(item)
-                localStorage.setItem('cart', JSON.stringify(cart))
-                alert('¡Producto agregado a tu carrito!')
+                const existingProduct = cart.find(product => product.id === item.id);
+                if (existingProduct) {
+                    existingProduct.quantity++;
+                    alert('Ya tienes el producto agregado, se sumará a la cantidad.');
+                } else {
+                    Object.assign(item, { quantity: 1 });
+                    cart.push(item);
+                    alert('¡Producto agregado a tu carrito!');
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
             })
 
             contId++
+            console.log(item);
+            console.log(cart);
         })
 
         state.loading = false
