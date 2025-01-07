@@ -64,6 +64,26 @@ header #logout a:hover {
     gap: 20px;
 }
 
+input:hover{
+    border-radius: 0;
+}
+
+select{
+    padding: 10px;
+}
+
+input{
+    padding: 10px;
+    outline: none;
+    border: 1.5px solid darkgray;
+    border-radius: 3px;
+    transition: border-radius 0.5s linear, box-shadow 0.25s linear, background-color 0.5s linear;
+}
+
+input:focus{
+    box-shadow: 0 0 5px dodgerblue;
+}
+
 /* PRODUCTS */
 .products{
     width: 100%;

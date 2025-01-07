@@ -1,5 +1,5 @@
-import { getAPI, postAPI } from "../utils/api.js";
-import { getToken } from "./auth.js";
+import { getAPI } from "../utils/api.js";
+import { getSession } from "./auth.js";
 
 
 
@@ -31,6 +31,63 @@ function previousPage() {
     state.currentPage = state.currentPage - 1;
     // Redibujar
     renderData(getNextData());
+}
+
+/**
+ * Filtra los productos según lo que escriba el usuario en el input
+ * @param {Promise} promise 
+ * @param {String} value 
+ * @returns {Promise}
+ */
+const filterByCategory = (promise, value) => {
+    value = value.toLowerCase().replace(/\s+/g, '')
+    const filter = promise.then((arr) => {
+        return arr.filter((item) => "layout" in item && "category" in item.layout && item.layout.category.toLowerCase().replace(/\s+/g, '') === value)
+    })
+    return filter
+}
+
+const eventFilters = () => {
+    document.getElementById('submitFilter').addEventListener("click", (event) => {
+        event.preventDefault()
+
+        const categoryValue = document.getElementById('categoria').value
+        const sliceShop = getNextData()
+        const newArr = filterByCategory(sliceShop, categoryValue)
+        renderData(newArr)
+    })
+
+    document.getElementById('submitSort').addEventListener("click", (event) => {
+        event.preventDefault()
+
+        const selectedValue = document.getElementById('order').options[document.getElementById('order').selectedIndex].value
+        const sliceShop = getNextData()
+        const newArr = sortBy(sliceShop, selectedValue)
+        renderData(newArr)
+    })
+}
+
+/**
+ * Ordena los productos según el valor seleccionado del select
+ * @param {Promise} promise 
+ * @param {String} value 
+ * @returns {Array}
+ */
+const sortBy = (promise, value) => {
+    value = value.toLowerCase().replace(/\s+/g, '')
+    let sort = []
+
+    if (value === 'ascendente') {
+        sort = promise.then((arr) => {
+            return arr.sort((a, b) => a.regularPrice - b.regularPrice)
+        })
+        return sort
+    } else {
+        sort = promise.then((arr) => {
+            return arr.sort((a, b) => b.regularPrice - a.regularPrice)
+        })
+        return sort
+    }
 }
 
 /**
@@ -95,6 +152,7 @@ const renderData = (promise) => {
     let contId = 0
     state.loading = true
     const fragment = document.createDocumentFragment()
+    const cart = JSON.parse(getSession('cart'))
 
     manageBtns()
 
@@ -112,7 +170,7 @@ const renderData = (promise) => {
             const id = document.createElement('p')
 
             button.textContent = 'Añadir al carrito'
-            button.id = 'addToCart'
+            button.className = 'addToCart'
 
             img.style.opacity = 0;
             name.style.opacity = 0;
@@ -185,9 +243,15 @@ const renderData = (promise) => {
             }
 
             document.querySelector('.products').appendChild(fragment)
+
             product.addEventListener("click", () => {
                 showInfo(item)
-                // addCart()
+            })
+
+            button.addEventListener("click", () => {
+                cart.push(item)
+                localStorage.setItem('cart', JSON.stringify(cart))
+                alert('¡Producto agregado a tu carrito!')
             })
 
             contId++
@@ -223,7 +287,7 @@ const readData = () => {
 const main = () => {
     readData()
     eventPagination()
-    // eventSubmit()
+    eventFilters()
 }
 
 document.addEventListener("DOMContentLoaded", main)

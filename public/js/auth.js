@@ -17,6 +17,7 @@ const validateUser = (user, email, promise) => {
 
         if (exist != undefined) {
             localStorage.setItem('token', exist.username)
+            localStorage.setItem('cart', JSON.stringify([]) )
             location.href = './views/shop.html'
         } else {
             alert('El usuario no existe.')
@@ -52,10 +53,11 @@ const registerUser = (user, email, arr) => {
 }
 
 /**
- * Devuelve el token guardado al iniciar sesión (nombre de usuario)
- * @returns {Object}
+ * Devuelve el objeto (string) guardado al iniciar sesión que se le pase por parámetro (key): username || carrito de la compra
+ * @param {String} key
+ * @returns {String}
  */
-export const getToken = () => localStorage.getItem('token')
+export const getSession = (key) => localStorage.getItem(key)
 
 const eventListeners = (login, register) => {
 
