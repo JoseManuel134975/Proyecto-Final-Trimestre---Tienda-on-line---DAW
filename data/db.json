@@ -254,17 +254,17 @@
       }
     },
     {
-      "id": 12,
+      "id": "12",
       "username": "Prueba",
       "email": "prueba1234@gmail.com"
     },
     {
-      "id": 13,
+      "id": "13",
       "username": "Prueba2",
       "email": "prueba12345678@gmail.com"
     },
     {
-      "id": 14,
+      "id": "14",
       "username": "Prueba3",
       "email": "prueba1111@gmail.com"
     }

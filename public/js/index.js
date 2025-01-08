@@ -10,6 +10,12 @@ const state = {
     currentPage: 1
 }
 
+/**
+ * Limpia la sesión al pulsar el enlace del menú 'salir'
+ */
+export const destroySessionStorage = () => {
+    sessionStorage.clear()
+}
 
 /**
  * Función que pasa a la siguiente página
@@ -301,4 +307,5 @@ const main = () => {
     eventFilters()
 }
 
+document.getElementById('logout').addEventListener("click", destroySessionStorage)
 document.addEventListener("DOMContentLoaded", main)

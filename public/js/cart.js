@@ -1,11 +1,15 @@
 import { getSession } from "./auth.js";
-import { clearHTML } from "../js/index.js";
+import { clearHTML, destroySessionStorage } from "../js/index.js";
 
 
 
+/**
+ * Renderiza el carrito y activa algunos listeners para su funcionamiento
+ * @returns {DocumentFragment}
+ */
 const renderCart = () => {
     clearHTML()
-    
+
     const cart = JSON.parse(getSession('cart'))
     const fragment = document.createDocumentFragment()
 
@@ -100,7 +104,7 @@ const renderCart = () => {
             document.querySelector('.products').appendChild(fragment)
 
             removeBtn.addEventListener("click", () => {
-                if(item.quantity > 1) {
+                if (item.quantity > 1) {
                     item.quantity--
                     document.getElementById('quantity').innerHTML = item.quantity
                 } else {
@@ -125,6 +129,9 @@ const renderCart = () => {
 const eventBtns = () => {
     document.querySelector('.buttons__button--clear').addEventListener("click", () => {
         const cart = JSON.parse(getSession('cart'))
+        if (cart.length < 1) {
+            alert('El carrito ya está vacío. ¡Empieza ha añadir productos!')
+        }
         cart.length = 0
         localStorage.setItem('cart', JSON.stringify(cart))
         renderCart()
@@ -136,5 +143,5 @@ const main = () => {
     eventBtns()
 }
 
+document.getElementById('logout').addEventListener("click", destroySessionStorage)
 document.addEventListener("DOMContentLoaded", main)
-
