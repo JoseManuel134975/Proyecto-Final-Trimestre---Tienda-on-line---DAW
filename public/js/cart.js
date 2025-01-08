@@ -136,6 +136,17 @@ const eventBtns = () => {
         localStorage.setItem('cart', JSON.stringify(cart))
         renderCart()
     })
+
+    document.getElementById('logout').addEventListener("click", destroySessionStorage)
+
+    document.querySelector('.buttons__button--buy').addEventListener("click", () => {
+        const cart = JSON.parse(getSession('cart'))
+        if (cart.length > 0) {
+            location.href = '../views/buy.html'
+        } else {
+            alert('No tienes productos en tu carrito. ¡Empieza ha añadir productos!')
+        }
+    })
 }
 
 const main = () => {
@@ -143,5 +154,4 @@ const main = () => {
     eventBtns()
 }
 
-document.getElementById('logout').addEventListener("click", destroySessionStorage)
 document.addEventListener("DOMContentLoaded", main)

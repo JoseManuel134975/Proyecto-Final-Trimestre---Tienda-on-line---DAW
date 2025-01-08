@@ -270,8 +270,6 @@ const renderData = (promise) => {
             })
 
             contId++
-            console.log(item);
-            console.log(cart);
         })
 
         state.loading = false
@@ -298,6 +296,7 @@ const eventPagination = () => {
 }
 
 const readData = () => {
+    document.getElementById('logout').addEventListener("click", destroySessionStorage)
     renderData(getNextData())
 }
 
@@ -307,5 +306,4 @@ const main = () => {
     eventFilters()
 }
 
-document.getElementById('logout').addEventListener("click", destroySessionStorage)
 document.addEventListener("DOMContentLoaded", main)

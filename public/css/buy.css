@@ -1,0 +1,94 @@
+/* GENERAL */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* VARIABLES */
+:root{
+    --main-gradient-color: linear-gradient(145deg, #f0f4f8, #d9e2ec);
+    --login-button-color: #c9d9ec;
+}
+
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: var(--main-gradient-color);
+}
+
+/* MAIN */
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+/* FORMULARIO */
+.form-container{
+    width: auto;
+    padding: 30px;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    align-items: center;
+    gap: 25px;
+    border-radius: 5px;
+    background: var(--main-gradient-color);
+    box-shadow: 0 0 5px black;
+}
+
+.form__credentials{
+    display: flex;
+    flex-flow: column wrap;
+    text-align: center;
+    gap: 25px;
+}
+
+.credentials__item{
+    display: flex;
+    flex-flow: column wrap;
+    gap: 10px;
+}
+
+label{
+    font-size: 1.25em;
+    color: #555555;
+}
+
+input:hover{
+    border-radius: 0;
+}
+
+input{
+    padding: 10px;
+    outline: none;
+    border: 1.5px solid darkgray;
+    border-radius: 3px;
+    transition: border-radius 0.5s linear, box-shadow 0.25s linear, background-color 0.5s linear;
+}
+
+input:focus{
+    box-shadow: 0 0 5px dodgerblue;
+}
+
+input[type="submit"]{
+    cursor: pointer;
+}
+
+input[type="submit"]:first-of-type{
+    background-color: var(--login-button-color);
+}
+
+input[type="submit"]:last-of-type{
+    background-color: transparent;
+}
+
+input[type="submit"]:last-of-type:hover{
+    background-color: var(--login-button-color);
+}
+
+input[type="submit"]:first-of-type:hover{
+    background-color: transparent;
+}

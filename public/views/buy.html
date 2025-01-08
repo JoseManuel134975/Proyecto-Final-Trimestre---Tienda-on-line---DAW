@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy</title>
+    <link rel="stylesheet" href="../css/buy.css">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <meta name="author" content="Jose Manuel Martinez Fernandez">
+    <meta name="description" content="Termina de comprar los productos añadidos al carrito">
+    <meta name="keywords" content="V-Bucks, Fortnite, API, Proyecto-Final-Trimestre---Tienda-On-line">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        emailjs.init('fqv3fO96fWS1zBMjr')
+    </script>
+</head>
+
+<body>
+    <main class="container">
+        <form class="form-container" id="form">
+            <div class="form__credentials">
+                <div class="field form__item">
+                    <label for="to_name">Nombre completo</label>
+                    <input type="text" name="to_name" id="to_name">
+                </div>
+                <div class="field form__item">
+                    <label for="to_email">Correo electrónico</label>
+                    <input type="email" name="to_email" id="to_email">
+                </div>
+                <div class="form__buttons form__item">
+                    <input type="submit" id="button" value="Confirmar pedido">
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script type="module" src="../js/buy.js"></script>
+</body>
+
+</html>
