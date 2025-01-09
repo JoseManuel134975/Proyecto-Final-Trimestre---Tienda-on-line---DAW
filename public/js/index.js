@@ -7,7 +7,8 @@ import { getSession } from "./auth.js";
 const state = {
     loading: false,
     limit: 8,
-    currentPage: 1
+    currentPage: 1,
+    contId: 0
 }
 
 /**
@@ -53,6 +54,9 @@ const filterByCategory = (promise, value) => {
     return filter
 }
 
+/**
+ * Aplica eventListeners a los botones de filtro
+ */
 const eventFilters = () => {
     document.getElementById('submitFilter').addEventListener("click", (event) => {
         event.preventDefault()
@@ -136,6 +140,8 @@ function manageBtns() {
         } else {
             document.getElementById('next').removeAttribute("disabled");
         }
+
+        document.getElementById('pageOfPages').innerHTML = `${state.currentPage}/${result}`
     })
 }
 
@@ -149,13 +155,14 @@ export const clearHTML = () => {
 
 /**
  * Muestra los productos y devuelve el fragmento 
+ * Aplica eventListeners para comprobar si el producto ya está agregado al carrito
+ * Y aplica un setTimeOut para simular el efecto de carga (tuve problemas con el asincronismo...)
  * @param {Promise} promise 
  * @return {DocumentFragment}
  */
 const renderData = (promise) => {
     clearHTML()
 
-    let contId = 0
     state.loading = true
     const fragment = document.createDocumentFragment()
     const cart = JSON.parse(getSession('cart'))
@@ -164,7 +171,7 @@ const renderData = (promise) => {
 
     promise.then((json) => {
         json.forEach((item) => {
-            Object.assign(item, { id: contId })
+            Object.assign(item, { id: state.contId })
 
             const product = document.createElement('article')
             product.className = 'products__product'
@@ -221,7 +228,7 @@ const renderData = (promise) => {
             }
 
             price.textContent = item.regularPrice + ' V-Bucks'
-            id.textContent = contId
+            id.textContent = state.contId
 
             product.appendChild(img)
             product.appendChild(name)
@@ -269,7 +276,7 @@ const renderData = (promise) => {
                 localStorage.setItem('cart', JSON.stringify(cart));
             })
 
-            contId++
+            state.contId++
         })
 
         state.loading = false
@@ -290,6 +297,9 @@ const showInfo = (obj) => {
     }
 }
 
+/**
+ * Aplica eventListeners a los botones de paginación
+ */
 const eventPagination = () => {
     document.getElementById('next').addEventListener("click", nextPage)
     document.getElementById('previous').addEventListener("click", previousPage)

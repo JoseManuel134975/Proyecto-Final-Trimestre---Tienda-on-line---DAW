@@ -1,9 +1,9 @@
-import { getSession } from "./auth.js";
-
-
-
 const btn = document.getElementById('button');
 
+/**
+ * Aplica el listener al botón de confirmación
+ * Y envia el correo
+ */
 document.getElementById('form')
     .addEventListener('submit', function (event) {
         event.preventDefault();
@@ -12,15 +12,23 @@ document.getElementById('form')
 
         const serviceID = 'default_service';
         const templateID = 'template_99ztf6k';
+        // Parámetros del formulario
+        const templateParams = {
+            to_email: document.getElementById('to_email').value,
+            to_name: document.getElementById('to_name').value
+        }
 
-        emailjs.sendForm(serviceID, templateID, this)
+        // Envio
+        emailjs.send(serviceID, templateID, templateParams)
             .then(() => {
                 btn.value = 'Confirmar pedido';
                 alert('¡Confirmado! Comprueba tu correo electrónico...');
+                // Vacío el carrito por completo (borro)
                 localStorage.removeItem('cart')
+                // Cambio de ventana
                 location.href = '../views/cart.html'
+                // Vuelvo a crear el carrito pero vacío
                 localStorage.setItem('cart', JSON.stringify([]));
-                console.log(getSession('cart'));
             }, (err) => {
                 btn.value = 'Confirmar pedido';
                 alert(JSON.stringify(err));

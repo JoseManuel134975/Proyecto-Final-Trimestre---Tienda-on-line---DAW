@@ -4,7 +4,7 @@ import { clearHTML, destroySessionStorage } from "../js/index.js";
 
 
 /**
- * Renderiza el carrito y activa algunos listeners para su funcionamiento
+ * Renderiza el carrito y activa algunos listeners para los botones de sumar y restar cantidad
  * @returns {DocumentFragment}
  */
 const renderCart = () => {
@@ -112,6 +112,7 @@ const renderCart = () => {
                 }
                 localStorage.setItem('cart', JSON.stringify(cart))
                 renderCart()
+                totalCount()
             })
 
             addBtn.addEventListener("click", () => {
@@ -119,6 +120,7 @@ const renderCart = () => {
                 document.getElementById('quantity').innerHTML = item.quantity
                 localStorage.setItem('cart', JSON.stringify(cart))
                 renderCart()
+                totalCount()
             })
         });
     }
@@ -126,6 +128,25 @@ const renderCart = () => {
     return fragment
 }
 
+/**
+ * Calcula la cuenta total
+ * @returns {void}
+ */
+const totalCount = () => {
+    const cart = JSON.parse(getSession('cart'))
+    let total = 0
+
+    cart.forEach((item) => {
+        total += (item.regularPrice * item.quantity)
+    })
+
+    document.getElementById('total').innerHTML = `${total} V-Bucks`
+}
+
+/**
+ * Aplica eventListeners a los botones de comprar y vaciar
+ * @returns {void}
+ */
 const eventBtns = () => {
     document.querySelector('.buttons__button--clear').addEventListener("click", () => {
         const cart = JSON.parse(getSession('cart'))
@@ -135,6 +156,7 @@ const eventBtns = () => {
         cart.length = 0
         localStorage.setItem('cart', JSON.stringify(cart))
         renderCart()
+        totalCount()
     })
 
     document.getElementById('logout').addEventListener("click", destroySessionStorage)
@@ -152,6 +174,7 @@ const eventBtns = () => {
 const main = () => {
     renderCart()
     eventBtns()
+    totalCount()
 }
 
 document.addEventListener("DOMContentLoaded", main)

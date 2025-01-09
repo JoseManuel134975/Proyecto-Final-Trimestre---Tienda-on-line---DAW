@@ -228,3 +228,16 @@ footer p:hover {
     color: #c9d9ec;
     transition: color 0.3s ease;
 }
+
+
+
+/* MEDIA QUERYS */
+@media (max-width: 576px) {
+    .products{
+        grid-template-columns: repeat(2, 45%);
+    }
+
+    .products__product{
+        font-size: 0.75em;
+    }
+}
