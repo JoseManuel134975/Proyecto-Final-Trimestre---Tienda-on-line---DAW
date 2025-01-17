@@ -40,6 +40,24 @@ function previousPage() {
     renderData(getNextData());
 }
 
+const createDropdown = () => {
+    const data = getAPI('https://fortnite-api.com/v2/shop')
+    const select = document.createElement('select')
+    const categories = []
+    const withoutRep = []
+
+    data.then((json) => {
+        json.data.entries.forEach((item) => {
+            // const option = document.createElement('option')
+            categories.push(item.layout.category)
+        })
+    })
+
+    console.log(categories);
+    const set = [...new Set(categories)]
+    console.log(set);
+}
+
 /**
  * Filtra los productos según lo que escriba el usuario en el input
  * @param {Promise} promise 
@@ -259,7 +277,7 @@ const renderData = (promise) => {
 
             document.querySelector('.products').appendChild(fragment)
 
-            product.addEventListener("click", () => {
+            img.addEventListener("click", () => {
                 showInfo(item)
             })
 
@@ -314,6 +332,7 @@ const main = () => {
     readData()
     eventPagination()
     eventFilters()
+    createDropdown()
 }
 
 document.addEventListener("DOMContentLoaded", main)
