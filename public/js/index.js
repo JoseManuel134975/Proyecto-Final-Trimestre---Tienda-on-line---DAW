@@ -40,22 +40,31 @@ function previousPage() {
     renderData(getNextData());
 }
 
+/**
+ * Crea el select para filtrar por categorías
+ * @returns {void}
+ */
 const createDropdown = () => {
     const data = getAPI('https://fortnite-api.com/v2/shop')
     const select = document.createElement('select')
+    select.className = 'categories'
     const categories = []
-    const withoutRep = []
+    let cont = 0
 
     data.then((json) => {
         json.data.entries.forEach((item) => {
             // const option = document.createElement('option')
-            categories.push(item.layout.category)
+            if(!categories.includes(item.layout.category) && item.layout.category !== undefined){
+                categories.push(item.layout.category)
+                const option = document.createElement('option')
+                option.textContent = categories[cont]
+                select.appendChild(option)
+                cont++
+            }
         })
     })
 
-    console.log(categories);
-    const set = [...new Set(categories)]
-    console.log(set);
+    document.getElementById('submitFilter').insertAdjacentElement('beforebegin', select)
 }
 
 /**
@@ -79,9 +88,11 @@ const eventFilters = () => {
     document.getElementById('submitFilter').addEventListener("click", (event) => {
         event.preventDefault()
 
-        const categoryValue = document.getElementById('categoria').value
+        const categoryValue = document.querySelector('.categories').options[document.querySelector('.categories').selectedIndex].value
+        console.log(categoryValue);
         const sliceShop = getNextData()
         const newArr = filterByCategory(sliceShop, categoryValue)
+        state.contId -= state.limit
         renderData(newArr)
     })
 
@@ -89,8 +100,10 @@ const eventFilters = () => {
         event.preventDefault()
 
         const selectedValue = document.getElementById('order').options[document.getElementById('order').selectedIndex].value
+        console.log(selectedValue);
         const sliceShop = getNextData()
         const newArr = sortBy(sliceShop, selectedValue)
+        state.contId -= state.limit
         renderData(newArr)
     })
 }
@@ -331,8 +344,8 @@ const readData = () => {
 const main = () => {
     readData()
     eventPagination()
-    eventFilters()
     createDropdown()
+    eventFilters()
 }
 
 document.addEventListener("DOMContentLoaded", main)
